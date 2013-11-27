@@ -89,7 +89,6 @@ var getPoetry = function(id, poemId, callback){
 	else{
 		db.collection('poetries'+id,function(err,poems){
 			poems.findOne({_id: new ObjectId(poemId.toString())},function(err, poem){
-				console.log(poem);
 				callback(poem);
 			});
 		});
@@ -147,7 +146,6 @@ app.post('/search', function(req,res){
 					returnObject.id= id;
 					returnObject.tweetList = tweetList;
 					returnObject.term = term;
-					console.log(tweetList);
 					res.json(returnObject);
 
 				});
