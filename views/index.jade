@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Poettry</title>
+<style type="text/css">
+.tweets{
+	font-size: 22px !important;
+	font-family: 'Courier New';
+}</style>
+<link rel="stylesheet" href="/stylesheets/style.css"/>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="header">
+<h1>poettry</h1>
+<h2>A post-modern poetry creator powered by twitter</h2>
+<p id="cta" class='info-hide'>Write me a poem about <input type="text" class='info-hide'name="poem" id="subject" onkeypress="return runScript(event)">.</p>
+<p id="searchTerm"></p>
+<p class ="tweets"></p>
+<p class ="tweets"></p>
+<p class ="tweets"></p>
+<p class ="tweets"></p>
+<p class ="tweets"></p>
+</div>
+<div class="footer">
+<a id="facebook"href="#" target="_blank">Share on Facebook <strong>||</strong></a>
+<a id='twitter'href="#" target="_blank">Share on Twitter <strong>||</strong></a>
+<a href="javascript:window.print()">Print this poetry <strong>||</strong></a>
+<a href="/"> Make a new poettry</a>
+
+<p id="2hide">Created by <a href="https://twitter.com/JackpineCo" target="_blank">@jackpineco</a></p>
+
+</div>
+</body>
+</html>
+</html>
+<script src="/javascripts/tweetPoem.js" type="text/javascript"></script>
+script.(type ="javascript")
+	var list =!{JSON.stringify(data)}
+	if(list){
+		console.log(list);
+		var pArray = document.getElementsByClassName("tweets");
+			for(var i = 0; i < pArray.length;i++){
+					pArray[i].innerHTML = list.tweetList[i];
+				}
+			document.getElementById("searchTerm").innerHTML=list.term.toUpperCase();
+			showTweets();
+			var facebookurl = "https://www.facebook.com/sharer/sharer.php?u=http://";
+			console.log(facebookurl);
+			document.getElementById("facebook").href=facebookurl+window.location.hostname+"/getPoettry/"+list.collectionNum+list._id;
+			var twitterurl = "http://www.twitter.com/share?url=http://";
+			document.getElementById("twitter").href=twitterurl+window.location.hostname+"/getPoettry/"+data.collectionNum+data._id;
+
+
+	}
+script.(type ="javascript")
+	function runScript(e){
+		console.log(window.location.href);
+		if(e.keyCode == 13){
+			var term = document.getElementById("subject").value;
+			console.log("enter pressed");
+			$.ajax({
+				type: 'POST' ,
+				url:"/search" ,
+				dataType: 'json',
+				data: {search: term } ,
+				success: function (data) {
+					console.log(data);
+					var pArray = document.getElementsByClassName("tweets");
+					for(var i = 0; i < pArray.length;i++){
+						pArray[i].innerHTML = data.tweetList[i];
+					}
+					document.getElementById("searchTerm").innerHTML=term.toUpperCase();
+					showTweets();
+					var facebookurl = "https://www.facebook.com/sharer/sharer.php?u=http://";
+					document.getElementById("facebook").href=facebookurl+window.location.hostname+"/getPoettry/"+data.collectionNum+data.id;
+					var twitterurl = "http://www.twitter.com/share?url=http://";
+					document.getElementById("twitter").href=twitterurl+window.location.hostname+"/getPoettry/"+data.collectionNum+data.id;
+				},
+				error: function (xhr, status, error) {
+					console.log('Error: ' + error.message);
+				}
+			});
+		}
+	}
+
