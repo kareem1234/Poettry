@@ -35,17 +35,16 @@ db= connect();
 */
 
 // database connect function for heroku
-var mongo = require("mongodb");
-var mongoUri = process.env.MONGOLAB_URI || 
-  process.env.MONGOHQ_URL || 
-  "mongodb://localhost/mydb"; 
+var mongo = require("mongodb").MongoClient;;
+var dbConfig = require("./dbConfig.json");
+var mongoUri = "mongodb://"+dbConfig.user+":"+dbConfig.pwd+"@ds053419.mongolab.com:53419/bantterdb";
 var db;
 var ObjectId = require('mongodb').ObjectID;
 // define database connection function 
 var connect = function(){""
 	// Connect to database if we haven"t already
 	if(!db){
-		mongo.Db.connect(mongoUri,function(err,myDB){
+		mongo.connect(mongoUri,function(err,myDB){
 			if(err) console.log("database:"+ err);
 			else db = myDB;
 		})
